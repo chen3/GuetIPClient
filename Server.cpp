@@ -19,16 +19,12 @@ QVariantList Server::networkList()
             for(auto entrie: interface.addressEntries()) {
                 QHostAddress hostAddress = entrie.ip();
                 bool ok = false;
-                quint32 ipv4 = hostAddress.toIPv4Address(&ok);
+                hostAddress.toIPv4Address(&ok);
                 if(!ok) {
                     continue;
                 }
-                QString ip = QString::number(ipv4, 16);
-                //insert ':' to MAC String  em."AABBCCDD" to "AA:BB:CC:DD"
-                ip.insert(2, ':');
-                ip.insert(5, ':');
-                ip.insert(8, ':');
-                list.append(QVariantMap{{"MAC", hardwareAddress}, {"IPV4", ip}});
+                QString ipv4 = hostAddress.toString();
+                list.append(QVariantMap{{"MAC", hardwareAddress}, {"IPV4", ipv4}});
             }
         }
     }

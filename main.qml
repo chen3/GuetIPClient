@@ -22,7 +22,10 @@ ApplicationWindow {
         }
         Component.onCompleted: {
             var array = CPPHelper.networkList();
-            listModel.append(array);
+            if(array.length > 0) {
+                listModel.append(array);
+                currentIndex = 0;
+            }
         }
     }
 
