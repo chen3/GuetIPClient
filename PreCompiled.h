@@ -1,3 +1,9 @@
+#include <QDebug>
 #include <QGuiApplication>
+#include <QHostAddress>
+#include <QMetaObject>
+#include <QNetworkAddressEntry>
+#include <QNetworkInterface>
 #include <QQmlApplicationEngine>
+#include <QVariantMap>
 #include <type_traits>
