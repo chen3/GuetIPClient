@@ -2,7 +2,8 @@ QT += qml quick
 
 CONFIG += c++11
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    CPPHelper.cpp
 
 RESOURCES += qml.qrc
 
@@ -32,4 +33,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    PreCompiled.h
+    PreCompiled.h \
+    CPPHelper.h \
+    QmlHelper.hpp
