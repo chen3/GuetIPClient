@@ -7,6 +7,7 @@ class Server : public QObject
 public:
     explicit Server(QObject *parent = 0);
 
+    static QVariantList networkList();
 
 };
 }
