@@ -144,7 +144,7 @@ ApplicationWindow {
                 function connect(i) {
                     var index = network.model.get(network.currentIndex);
                     var index2 = serviceProvider.model.get(serviceProvider.currentIndex);
-                    var data = {"ip": index.IPV4, "mac": index.MAC, "service": index2.value, "connect": i};
+                    var data = {"ip": index.IPV4, "mac": index.MAC, "service": index2.value, "connectType": i};
                     server.connect(data);
                 }
             }

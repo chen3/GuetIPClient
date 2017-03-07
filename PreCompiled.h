@@ -1,9 +1,12 @@
+#include <exception>
 #include <QDebug>
 #include <QGuiApplication>
 #include <QHostAddress>
 #include <QMetaObject>
 #include <QNetworkAddressEntry>
+#include <QNetworkDatagram>
 #include <QNetworkInterface>
 #include <QQmlApplicationEngine>
+#include <QUdpSocket>
 #include <QVariantMap>
 #include <type_traits>

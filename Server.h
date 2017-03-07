@@ -10,6 +10,10 @@ public:
     static QVariantList networkList();
 
     Q_INVOKABLE void connect(QVariantMap json);
+    static QByteArray getCheckSum(const QByteArray data);
+
+private:
+    QUdpSocket socket;
 
 };
 }
