@@ -9,5 +9,7 @@ public:
 
     static QVariantList networkList();
 
+    Q_INVOKABLE void connect(QVariantMap json);
+
 };
 }

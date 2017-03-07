@@ -31,4 +31,9 @@ QVariantList Server::networkList()
     return list;
 }
 
+void Server::connect(QVariantMap json)
+{
+
+}
+
 }
