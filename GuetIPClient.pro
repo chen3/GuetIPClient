@@ -11,7 +11,7 @@ else {
     ICON = app.ico
 }
 
-VERSION = 0.6.1
+VERSION = 0.6.2
 
 SOURCES += main.cpp \
     CPPHelper.cpp \

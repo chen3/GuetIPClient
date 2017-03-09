@@ -13,7 +13,11 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     QiDiTu::QmlHelper<QiDiTu::CPPHelper>::registerSingleton("cn.qiditu", 1, 0);
     qmlRegisterType<QiDiTu::Server>("cn.qiditu", 1, 0, "Server");
-    engine.load(QUrl(QLatin1String("qrc:/main.qml")));
+    QUrl file = "qrc:/main.qml";
+    if(QFile::exists("main.qml")) {
+        file = QUrl::fromLocalFile("main.qml");
+    }
+    engine.load(QUrl(file));
 
     return app.exec();
 }

@@ -139,6 +139,7 @@ ApplicationWindow {
                     enabled: textSystem.length != 0;
                     text: qsTr("运行");
                     highlighted: true;
+                    Layout.leftMargin: 5;
                     onClicked: {
                         CPPHelper.run(textSystem.text);
                     }

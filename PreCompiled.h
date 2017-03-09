@@ -1,5 +1,6 @@
 #include <exception>
 #include <QDebug>
+#include <QFile>
 #include <QGuiApplication>
 #include <QHostAddress>
 #include <QMetaObject>
@@ -9,5 +10,6 @@
 #include <QQmlApplicationEngine>
 #include <QTimer>
 #include <QUdpSocket>
+#include <QUrl>
 #include <QVariantMap>
 #include <type_traits>
