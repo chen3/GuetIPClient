@@ -1,6 +1,7 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.0
+import QtQuick.Dialogs 1.1
 
 import cn.qiditu 1.0
 
@@ -73,6 +74,7 @@ ApplicationWindow {
             }
 
             RowLayout {
+                enabled: false;
                 Text {
                     text: qsTr("用户名：");
                     font.pixelSize: 30;
@@ -86,6 +88,7 @@ ApplicationWindow {
             }
 
             RowLayout {
+                enabled: false;
                 Text {
                     text: qsTr("密   码：");
                     font.pixelSize: 30;
@@ -146,13 +149,48 @@ ApplicationWindow {
                     var index2 = serviceProvider.model.get(serviceProvider.currentIndex);
                     var data = {"ip": index.IPV4, "mac": index.MAC, "service": index2.value, "connectType": i};
                     server.connect(data);
+                    busyIndicator.running = true;
                 }
             }
         }
 
         Server {
             id: server;
+            onSuccess: {
+                busyIndicator.running = false;
+            }
+            onError: {
+                busyIndicator.running = false;
+                messageDialog.show(message);
+            }
         }
+
+        MessageDialog {
+            id: messageDialog;
+            title: qsTr("udp");
+            function show(text) {
+                this.text = text;
+                visible = true;
+            }
+        }
+
+        Rectangle {
+            anchors.fill: parent;
+            color: "#09000000";
+            visible: busyIndicator.running;
+
+            MouseArea {
+                anchors.fill: parent;
+                hoverEnabled: true;
+
+                BusyIndicator {
+                    id: busyIndicator;
+                    anchors.centerIn: parent;
+                    running: false;
+                }
+            }
+        }
+
     }
 
 }

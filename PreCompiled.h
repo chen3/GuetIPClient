@@ -7,6 +7,7 @@
 #include <QNetworkDatagram>
 #include <QNetworkInterface>
 #include <QQmlApplicationEngine>
+#include <QTimer>
 #include <QUdpSocket>
 #include <QVariantMap>
 #include <type_traits>

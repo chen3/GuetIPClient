@@ -4,11 +4,10 @@ namespace QiDiTu {
 Server::Server(QObject *parent)
     : QObject(parent)
 {
-    socket.isOpen();
-    QObject::connect(&socket, &QUdpSocket::readyRead, &socket, [this](){
-        QByteArray bytes = socket.receiveDatagram().data();
-        qDebug() << bytes.toHex();
-    });
+    QObject::connect(&socket, &QUdpSocket::readyRead, this, &Server::receive);
+    timer.setInterval(1000);
+    timer.setSingleShot(true);
+    QObject::connect(&timer, &QTimer::timeout, this, &Server::timeout);
 }
 
 QVariantList Server::networkList()
@@ -41,10 +40,12 @@ void Server::connect(QVariantMap json)
     QByteArray data;
     data.append(30, 0x00);
 
-    QStringList list = json["ip"].toString().split('.');
-    for(const auto& s : list) {
-        data.append(static_cast<char>(s.toInt()));
+    QByteArray ip;
+    for(const auto& s : json["ip"].toString().split('.')) {
+        ip.append(static_cast<unsigned char>(s.toInt()));
     }
+    lastIp = ip;
+    data.append(ip);
 
     QString mac = json["mac"].toString();
     data.append(mac).append(20 - mac.length(), 0x00);
@@ -53,7 +54,10 @@ void Server::connect(QVariantMap json)
         .append(json["connectType"].toString().toInt());
 
     QByteArray checkSum = getCheckSum(data);
-    socket.writeDatagram(data.append(checkSum), QHostAddress("172.16.1.1"), 20015);
+    isWaitUdpReceive = true;
+    timer.start();
+    lastData = data.append(checkSum);
+    socket.writeDatagram(lastData, QHostAddress("172.16.1.1"), 20015);
 }
 
 QByteArray Server::getCheckSum(const QByteArray data)
@@ -72,6 +76,33 @@ QByteArray Server::getCheckSum(const QByteArray data)
     }
     ecx &= 0x7FFFFFFF;
     return QByteArray(reinterpret_cast<char*>(&ecx), 4);
+}
+
+void Server::receive()
+{
+    QNetworkDatagram datagram = socket.receiveDatagram();
+    if(datagram.senderAddress().toString() != "172.16.1.1"
+        && datagram.senderPort() != 20015
+        && !isWaitUdpReceive) {
+        return;
+    }
+    isWaitUdpReceive = false;
+    timer.stop();
+    QByteArray data = datagram.data();
+    if(data != QByteArray(lastIp).append(static_cast<char>(0x00))) {
+        emit error(tr("错误的服务器返回值：") + data.toHex());
+    }
+    else {
+        lastData[lastData.length() - 1] = static_cast<char>(0x02);
+        socket.writeDatagram(lastData, QHostAddress("172.16.1.1"), 20015);
+        emit success();
+    }
+}
+
+void Server::timeout()
+{
+    isWaitUdpReceive = false;
+    emit error(tr("注册服务器超时"));
 }
 
 }

@@ -3,13 +3,16 @@
 namespace QiDiTu {
 
 /**
- *  qmlRegisterSingletonType helper class
+ *  @brief qmlRegisterSingletonType helper class
  */
 template<class T>
 class QmlHelper
 {
 public:
     QmlHelper() = delete;
+    /**
+     *  T must extend QObject
+     */
     static_assert(std::is_base_of<QObject, T>::value, "Not QObject");
 
     static void registerSingleton(const QString &url, int versionMajor, int versionMinor,
