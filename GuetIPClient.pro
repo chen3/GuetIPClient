@@ -49,3 +49,6 @@ HEADERS += \
     CPPHelper.h \
     QmlHelper.hpp \
     Server.h
+
+DISTFILES += \
+    LICENSE
