@@ -10,7 +10,6 @@ ApplicationWindow {
     visible: true
     width: 600
     height: 180
-    title: qsTr("Hello World")
 
     Item {
         id: root;

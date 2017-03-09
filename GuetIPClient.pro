@@ -4,7 +4,14 @@ CONFIG += c++11
 
 LANGUAGE = C++
 
-VERSION = 0.6.0
+win32 {
+    RC_ICONS = app.ico
+}
+else {
+    ICON = app.ico
+}
+
+VERSION = 0.6.1
 
 SOURCES += main.cpp \
     CPPHelper.cpp \
