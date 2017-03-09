@@ -2,13 +2,14 @@ import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.0
 import QtQuick.Dialogs 1.1
+import Qt.labs.settings 1.0
 
 import cn.qiditu 1.0
 
 ApplicationWindow {
     visible: true
     width: 600
-    height: 280
+    height: 180
     title: qsTr("Hello World")
 
     Item {
@@ -74,7 +75,7 @@ ApplicationWindow {
             }
 
             RowLayout {
-                enabled: false;
+                visible: false;
                 Text {
                     text: qsTr("用户名：");
                     font.pixelSize: 30;
@@ -88,7 +89,7 @@ ApplicationWindow {
             }
 
             RowLayout {
-                enabled: false;
+                visible: false;
                 Text {
                     text: qsTr("密   码：");
                     font.pixelSize: 30;
@@ -102,6 +103,7 @@ ApplicationWindow {
             }
 
             Row {
+                visible: false;
                 spacing: 20
                 enabled: false;
                 CheckBox {
@@ -118,6 +120,29 @@ ApplicationWindow {
 
                 CheckBox {
                     text: qsTr("开机自启");
+                }
+            }
+
+            RowLayout {
+
+                CheckBox {
+                    id: checkBoxAutoExe;
+                    text: qsTr("注册成功后自动执行命令：");
+                }
+
+                TextField {
+                    id: textSystem;
+                    width: 240;
+                }
+
+                Button {
+                    id: btnRun;
+                    enabled: textSystem.length != 0;
+                    text: qsTr("运行");
+                    highlighted: true;
+                    onClicked: {
+                        CPPHelper.run(textSystem.text);
+                    }
                 }
             }
 
@@ -154,10 +179,18 @@ ApplicationWindow {
             }
         }
 
+        Settings {
+            property alias checkBoxAutoExeChecked: checkBoxAutoExe.checked;
+            property alias textSystem: textSystem.text;
+        }
+
         Server {
             id: server;
             onSuccess: {
                 busyIndicator.running = false;
+                if(checkBoxAutoExe.checked) {
+                    btnRun.clicked();
+                }
             }
             onError: {
                 busyIndicator.running = false;

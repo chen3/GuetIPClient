@@ -2,6 +2,10 @@ QT += qml quick network
 
 CONFIG += c++11
 
+LANGUAGE = C++
+
+VERSION = 0.6.0
+
 SOURCES += main.cpp \
     CPPHelper.cpp \
     Server.cpp
