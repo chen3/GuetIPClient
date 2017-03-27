@@ -9,7 +9,7 @@ class CPPHelper : public QObject
 public:
     explicit CPPHelper(QObject *parent = 0);
     Q_INVOKABLE QVariantList networkList();
-    Q_INVOKABLE void run(const QString& arguemnt);
+    Q_INVOKABLE void run(const QString& command);
 
 };
 }

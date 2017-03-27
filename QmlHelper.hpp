@@ -31,7 +31,7 @@ public:
     }
 
 private:
-    static QObject* callback(QQmlEngine *engine, QJSEngine *scriptEngine)
+    static QObject* callback(QQmlEngine* engine, QJSEngine* scriptEngine)
     {
         Q_UNUSED(engine)
         Q_UNUSED(scriptEngine)

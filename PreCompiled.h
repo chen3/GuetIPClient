@@ -8,8 +8,10 @@
 #include <QNetworkDatagram>
 #include <QNetworkInterface>
 #include <QQmlApplicationEngine>
+#include <QQmlEngine>
 #include <QTimer>
 #include <QUdpSocket>
 #include <QUrl>
+#include <QVariant>
 #include <QVariantMap>
 #include <type_traits>
